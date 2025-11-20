@@ -13,7 +13,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#f0fdf4] text-slate-700 selection:bg-emerald-200 pb-20">
-      
+
       {/* Decorative Background Elements - Little Fresh (Pastel) Theme */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Soft Mint Blob */}
@@ -30,10 +30,10 @@ const App: React.FC = () => {
         <main className="mt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {NAV_ITEMS.map((item) => (
-              <GridCard 
-                key={item.id} 
-                item={item} 
-                onClick={() => setSelectedId(item.id)} 
+              <GridCard
+                key={item.id}
+                item={item}
+                onClick={() => setSelectedId(item.id)}
               />
             ))}
           </div>
@@ -41,16 +41,16 @@ const App: React.FC = () => {
 
         <AnimatePresence>
           {selectedId && selectedItem && (
-            <ExpandedOverlay 
-              item={selectedItem} 
-              onClose={() => setSelectedId(null)} 
+            <ExpandedOverlay
+              item={selectedItem}
+              onClose={() => setSelectedId(null)}
             />
           )}
         </AnimatePresence>
       </div>
-      
+
       <footer className="mt-24 text-center text-emerald-800/40 text-sm font-medium">
-         <p>&copy; {new Date().getFullYear()} tamochi'page. Designed with freshness.</p>
+        <p>copyright:© ${new Date().getFullYear()} www.tamochi.cn <br /><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2025111741号-2</a></p>
       </footer>
     </div>
   );
