@@ -28,6 +28,7 @@ const App: React.FC = () => {
         <Header />
 
         <main className="mt-8">
+          {/* Use layoutRoot to help shared element transitions if needed, but default usually works */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {NAV_ITEMS.map((item) => (
               <GridCard
@@ -50,7 +51,11 @@ const App: React.FC = () => {
       </div>
 
       <footer className="mt-24 text-center text-emerald-800/40 text-sm font-medium">
-        <p>copyright:© ${new Date().getFullYear()} www.tamochi.cn <br /><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2025111741号-2</a></p>
+        <p>
+          &copy; {new Date().getFullYear()} tamochi's home. Powered by google.
+          <br />
+          <a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">鄂ICP备2025111741号-2</a>
+        </p>
       </footer>
     </div>
   );

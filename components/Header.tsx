@@ -10,27 +10,19 @@ const Header: React.FC = () => {
       className="w-full flex justify-center items-center py-16 relative z-10"
     >
       <div className="relative">
-        {/* Removed the glow background container completely as requested */}
-        
         <h1 
           className="text-5xl md:text-7xl font-bold tracking-tighter text-center select-none relative z-10"
           style={{
             fontFamily: '"Space Grotesk", sans-serif',
-            // Using color with a slight opacity to blend, or a solid dark green with texture
             color: '#065f46', // Emerald 800
-            
-            // CSS trick for "Rough" texture on the font itself:
-            // We use a noise image as a mask or background clip if we wanted gradient text,
-            // but for "Solid + Texture", text-shadow and SVG filters work best.
-            // Here we simulate the "Frosted Rough" look by adding a grain filter URL to the text itself (if supported)
-            // or simply using a grainy SVG filter on the text element.
+            // Simple text shadow to replace complex SVG filter if needed, but keeping filter for texture
             filter: 'url(#textNoise)',
           }}
         >
-          tamochi'page
+          tamochi's home
         </h1>
         
-        {/* SVG Filter Definition for the "Rough/Frosted" Font Texture */}
+        {/* SVG Filter for "Frosted Rough" Font Texture */}
         <svg className="absolute w-0 h-0">
           <filter id="textNoise">
             <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise" />

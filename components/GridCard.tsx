@@ -13,7 +13,7 @@ const GridCard: React.FC<GridCardProps> = ({ item, onClick }) => {
     <motion.div
       layoutId={`card-container-${item.id}`}
       onClick={onClick}
-      className="relative group cursor-pointer h-64 w-full perspective-1000"
+      className="relative group cursor-pointer h-64 w-full z-10"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.02 }}
@@ -22,13 +22,15 @@ const GridCard: React.FC<GridCardProps> = ({ item, onClick }) => {
       {/* Card Background/Border wrapper - Light Mode Glass */}
       <motion.div 
         className={`h-full w-full rounded-3xl p-[1px] bg-gradient-to-br from-white/60 to-white/30 overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 backdrop-blur-md`}
-        style={{ transformStyle: 'preserve-3d' }}
       >
          {/* Inner Content - White translucent */}
         <div className="relative h-full w-full bg-white/40 rounded-[23px] p-6 flex flex-col items-center justify-center overflow-hidden border border-white/50">
           
-          {/* Decorative Gradient Orb - Softer opacity for pastel feel */}
-          <div className={`absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br ${item.color} opacity-40 blur-[60px] group-hover:opacity-50 transition-opacity duration-500`} />
+          {/* Decorative Gradient Orb - We layoutId this to blend into the expanded background if needed, or just fade out */}
+          <motion.div 
+            layoutId={`card-bg-gradient-${item.id}`}
+            className={`absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br ${item.color} opacity-40 blur-[60px] group-hover:opacity-50 transition-opacity duration-500 pointer-events-none`} 
+          />
 
           {item.isAvatar ? (
             // Avatar Mode Layout
@@ -46,8 +48,11 @@ const GridCard: React.FC<GridCardProps> = ({ item, onClick }) => {
                 </div>
               </motion.div>
               
-              {/* Title is hidden for Avatar mode as requested */}
-              
+              {/* Use a hidden title layoutId to anchor it even if hidden, or display small */}
+               <motion.div layoutId={`card-title-${item.id}`} className="hidden">
+                  {item.title || "About Me"}
+               </motion.div>
+
               <motion.p 
                 layoutId={`card-desc-${item.id}`}
                 className="relative z-10 mt-2 text-sm text-slate-600 text-center line-clamp-3 font-medium px-4"
@@ -81,9 +86,12 @@ const GridCard: React.FC<GridCardProps> = ({ item, onClick }) => {
             </>
           )}
 
-          <div className="absolute bottom-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs text-slate-500 font-bold uppercase tracking-widest">
+          <motion.div 
+            layoutId={`card-btn-${item.id}`}
+            className="absolute bottom-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs text-slate-500 font-bold uppercase tracking-widest"
+          >
             {item.isAvatar ? 'Read Bio' : 'Click to Open'}
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </motion.div>
