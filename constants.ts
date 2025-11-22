@@ -15,7 +15,7 @@ export const NAV_ITEMS: NavItem[] = [
   {
     id: 'site-profile',
     title: 'About Me', // Hidden in Grid
-    description: '我是Ziyao Liu 英语名tamochi，这是我的个人导航页，可以点击卡片前往我的不同站点，了解我更多的信息。',
+    description: '我是tamochi，可以点击卡片前往我的不同站点来了解我更多的信息。',
     url: '', // Not used for navigation in this mode
     // Pastel Gray/Blue (Neutral for profile)
     color: 'from-slate-200 to-gray-200',
