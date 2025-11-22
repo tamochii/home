@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: |
+          if command -v pnpm >/dev/null 2>&1; then pnpm i --frozen-lockfile || pnpm i;
+          elif command -v yarn >/dev/null 2>&1; then yarn install --frozen-lockfile || yarn install;
+          else npm ci || npm i; fi
+
+      - name: Build
+        run: |
+          if [ -f package.json ] && jq -e '.scripts.build' package.json >/dev/null 2>&1; then
+            npm run build || yarn build || pnpm build
+          else
+            echo "No build script"; exit 1
+          fi
+
+      - name: Locate build dir
+        id: locate
+        run: |
+          if [ -d dist ]; then echo "path=dist" >> $GITHUB_OUTPUT;
+          elif [ -d build ]; then echo "path=build" >> $GITHUB_OUTPUT;
+          else echo "No dist or build dir"; exit 1; fi
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ steps.locate.outputs.path }}
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
