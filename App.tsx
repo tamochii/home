@@ -34,7 +34,7 @@ const App: React.FC = () => {
               <GridCard
                 key={item.id}
                 item={item}
-                onClick={() => setSelectedId(item.id)}
+                onClick={item.id === 'site-profile' ? undefined : () => setSelectedId(item.id)}
               />
             ))}
           </div>
